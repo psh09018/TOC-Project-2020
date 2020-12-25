@@ -44,6 +44,7 @@ class TocMachine(GraphMachine):
 
         reply_token = event.reply_token
         send_text_message(reply_token, "Trigger state3")
+        self.get_graph().draw("fsm.png", prog="dot", format="png")
         self.go_back()
 
     def on_exit_state3(self):
