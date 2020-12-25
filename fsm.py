@@ -1,5 +1,5 @@
 from transitions.extensions import GraphMachine
-
+from flask import send_file
 from utils import send_text_message
 
 
@@ -44,7 +44,8 @@ class TocMachine(GraphMachine):
 
         reply_token = event.reply_token
         send_text_message(reply_token, "Trigger state3")
-        self.get_graph().draw("fsm.png", prog="dot", format="png")
+        self.get_graph().draw("fsm1.png", prog="dot", format="png")
+        send_file("fsm1.png", mimetype="image/png")
         self.go_back()
 
     def on_exit_state3(self):
