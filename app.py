@@ -3,7 +3,7 @@ import sys
 
 from flask import Flask, jsonify, request, abort, send_file
 from dotenv import load_dotenv
-from linebot import LineBotApi, WebhookParser
+from linebot import LineBotApi, WebhookParser, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 
@@ -48,7 +48,7 @@ channel_secret = os.getenv("LINE_CHANNEL_SECRET", None)
 channel_access_token = os.getenv("LINE_CHANNEL_ACCESS_TOKEN", None)
 
 line_bot_api = LineBotApi(channel_access_token)
-handler = WebhookParser(channel_secret)
+handler = WebhookHandler(channel_secret)
 
 
 # @app.route("/callback", methods=["POST"])
