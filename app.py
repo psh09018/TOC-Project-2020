@@ -8,7 +8,7 @@ from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 
 from fsm import TocMachine
-from utils import send_text_message
+from utils import send_text_message, send_image_message
 
 load_dotenv()
 
@@ -110,7 +110,8 @@ def webhook_handler():
         print(f"REQUEST BODY: \n{body}")
         response = machine.advance(event)
         if response == False:
-            send_text_message(event.reply_token, "Not Entering any State")
+            #send_text_message(event.reply_token, "Not Entering any State")
+            send_image_message(event.reply_token, 'https://chatbot0918.herokuapp.com/show-fsm')
 
     return "OK"
 
