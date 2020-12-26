@@ -130,15 +130,9 @@ def callback():
 def handle_message(event):
     # get user id when reply
     user_id = event.source.user_id
+    img_url = "https://i.imgur.com/eTldj2E.png?1"
     print("user_id =", user_id)
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=user_id)
-    )
-
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=event.message.text))
+    line_bot_api.reply_message(user_id, ImageSendMessage(original_content_url=img_url, preview_image_url=img_url)
 
 @app.route("/show-fsm", methods=["GET"])
 def show_fsm():
