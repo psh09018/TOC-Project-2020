@@ -157,13 +157,15 @@ def webhook_handler():
         if response == False:
             if machine.state != 'start' and event.message.text.lower() == 'restart':
                 information = "歡迎使用女排聯賽機器人\n\
-                      請輸入『賽程』、『隊伍資訊』、『活動詳情』獲得比賽相關資訊\n\
-                      也可輸入『meme』讓你獲得快樂\n\
-                      隨時輸入『restart』重新開始\n\
-                      ----------------------\n\
-                      輸入『fsm』獲得fsm\n".replace(" ", "")
+                               請輸入『賽程』、『隊伍資訊』、『活動詳情』獲得比賽相關資訊\n\
+                               也可輸入『meme』讓你獲得快樂\n\
+                               隨時輸入『restart』重新開始\n\
+                               ----------------------\n\
+                               輸入『fsm』獲得fsm\n".replace(" ", "")
                 send_text_message(event.reply_token, information)      
                 machine.go_back()
+            elif machine.state == 'schedule':
+                send_text_message(event.reply_token, "該天沒有賽程或是輸入錯誤，請重新輸入")    
 
     return "OK"
 
