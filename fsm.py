@@ -7,16 +7,6 @@ class TocMachine(GraphMachine):
     def __init__(self, **machine_configs):
         self.machine = GraphMachine(model=self, **machine_configs)
 
-    #start
-    def on_enter_start(self, event):
-        reply_token = event.reply_token
-        information = "歡迎使用女排聯賽機器人\n\
-                      請輸入『賽程』、『隊伍資訊』、『活動詳情』獲得比賽相關資訊\n\
-                      也可輸入『meme』讓你獲得快樂\n\
-                      隨時輸入『restart』重新開始\n\
-                      ----------------------\n\
-                      輸入『fsm』獲得fsm\n".replace(" ", "")
-        send_text_message(reply_token, information)
     
     #schedule
     def is_going_to_schedule(self, event):
