@@ -111,7 +111,9 @@ def webhook_handler():
         response = machine.advance(event)
         if response == False:
             #send_text_message(event.reply_token, "Not Entering any State")
-            send_image_message(event.reply_token, 'https://chatbot0918.herokuapp.com/show-fsm')
+            # send_image_message(event.reply_token, 'https://chatbot0918.herokuapp.com/show-fsm')
+            
+            send_image_message(event.reply_token, 'https://i.imgur.com/T2bLdbN.jpg')
 
     return "OK"
 
