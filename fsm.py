@@ -12,7 +12,7 @@ class TocMachine(GraphMachine):
         return text == "賽程"
     def on_enter_schedule(self, event):
         reply_token = event.reply_token
-        send_text_message(reply_token, "請輸入欲查詢賽程之日期：\n11/07\n11/08\n11/15\n11/16")
+        send_text_message(reply_token, "請輸入欲查詢賽程之日期：\n11/07\n11/08\n11/14\n11/15")
 
     #team_info
     def is_going_to_team_info(self, event):
