@@ -156,7 +156,6 @@ def webhook_handler():
         response = machine.advance(event)
         if response == False:
             if machine.state != 'start' and event.message.text.lower() == 'restart':
-                send_text_message(event.reply_token, "restart state")
                 machine.go_back()
 
     return "OK"
