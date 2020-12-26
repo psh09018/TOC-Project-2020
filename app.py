@@ -29,7 +29,7 @@ def reply():
     return 'Hello, World!'
 
 
-@app.route('/', methods=['POST'])
+@app.route('/callback', methods=['POST'])
 def receive():
     webhook = json.loads(request.data.decode("utf-8"))
     reply_token, user_id, message = webhook_parser(webhook)
