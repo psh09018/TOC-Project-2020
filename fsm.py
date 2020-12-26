@@ -33,7 +33,6 @@ class TocMachine(GraphMachine):
     def on_enter_team_info(self, event):
         reply_token = event.reply_token
         send_image_message(reply_token, 'https://i.imgur.com/T2bLdbN.jpg')
-        send_text_message(reply_token, "可輸入隊伍代號查詢選手名單")
         self.go_back()
 
     #detail
