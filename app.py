@@ -14,29 +14,74 @@ load_dotenv()
 
 
 machine = TocMachine(
-    states=["user", "state1", "state2", "state3"],
+    states=["start", "schedule", "team_info", "detail", "fsm", "meme", 
+            "date_1107", "date_1108", "date_1114", "date_1115",],
+
     transitions=[
+        # start-schedule
         {
             "trigger": "advance",
-            "source": "user",
-            "dest": "state1",
-            "conditions": "is_going_to_state1",
+            "source": "start",
+            "dest": "schedule",
+            "conditions": "is_going_to_schedule",
         },
+        # start-team_info
         {
             "trigger": "advance",
-            "source": "user",
-            "dest": "state2",
-            "conditions": "is_going_to_state2",
+            "source": "start",
+            "dest": "team_info",
+            "conditions": "is_going_to_team_info",
         },
+        # start-detail
         {
             "trigger": "advance",
-            "source": "user",
-            "dest": "state3",
-            "conditions": "is_going_to_state3",
+            "source": "start",
+            "dest": "detail",
+            "conditions": "is_going_to_detail",
         },
-        {"trigger": "go_back", "source": ["state1", "state2", "state3"], "dest": "user"},
+        # start-fsm
+        {
+            "trigger": "advance",
+            "source": "start",
+            "dest": "fsm",
+            "conditions": "is_going_to_fsm",
+        },
+        # start-meme
+        { "trigger": "advance", "source": "start", "dest": "meme", "conditions": "is_going_to_meme",},
+        #####
+
+        #schedule
+        { "trigger": "advance", "source": "schedule", "dest": "date_1107", "conditions": "is_going_to_date_1107",},
+        { "trigger": "advance", "source": "schedule", "dest": "date_1108", "conditions": "is_going_to_date_1108",},
+        { "trigger": "advance", "source": "schedule", "dest": "date_1114", "conditions": "is_going_to_date_1114",},
+        { "trigger": "advance", "source": "schedule", "dest": "date_1115", "conditions": "is_going_to_date_1115",},
+
+        #####
+        
+        # #team_info
+        # { "trigger": "advance", "source": "team_info", "dest": "A", "conditions": "is_going_to_A",},
+        # { "trigger": "advance", "source": "team_info", "dest": "B", "conditions": "is_going_to_B",},
+        # { "trigger": "advance", "source": "team_info", "dest": "C", "conditions": "is_going_to_C",},
+        # { "trigger": "advance", "source": "team_info", "dest": "D", "conditions": "is_going_to_D",},
+        # { "trigger": "advance", "source": "team_info", "dest": "E", "conditions": "is_going_to_E",},
+        # { "trigger": "advance", "source": "team_info", "dest": "F", "conditions": "is_going_to_F",},
+        # { "trigger": "advance", "source": "team_info", "dest": "G", "conditions": "is_going_to_G",},
+        # { "trigger": "advance", "source": "team_info", "dest": "H", "conditions": "is_going_to_H",},
+        # { "trigger": "advance", "source": "team_info", "dest": "I", "conditions": "is_going_to_I",},
+        # { "trigger": "advance", "source": "team_info", "dest": "J", "conditions": "is_going_to_J",},
+        # { "trigger": "advance", "source": "team_info", "dest": "K", "conditions": "is_going_to_K",},
+        # { "trigger": "advance", "source": "team_info", "dest": "L", "conditions": "is_going_to_L",},
+        # { "trigger": "advance", "source": "team_info", "dest": "M", "conditions": "is_going_to_M",},
+        # { "trigger": "advance", "source": "team_info", "dest": "N", "conditions": "is_going_to_N",},
+        # { "trigger": "advance", "source": "team_info", "dest": "O", "conditions": "is_going_to_O",},
+        # { "trigger": "advance", "source": "team_info", "dest": "P", "conditions": "is_going_to_P",},
+
+        #back_forward
+        { "trigger": "go_back", "source": ["schedule", "team_info", "detail", "fsm", "meme"], "dest": "start"},
+        { "trigger": "go_schedule", "source": ["date_1107", "date_1108", "date_1114", "date_1115"], "dest": "schedule"},
+        # { "trigger": "go_team_info", "source": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P"], "dest": "team_info"},
     ],
-    initial="user",
+    initial="start",
     auto_transitions=False,
     show_conditions=True,
 )
@@ -110,10 +155,8 @@ def webhook_handler():
         print(f"REQUEST BODY: \n{body}")
         response = machine.advance(event)
         if response == False:
-            #send_text_message(event.reply_token, "Not Entering any State")
-            # send_image_message(event.reply_token, 'https://chatbot0918.herokuapp.com/show-fsm')
-            
-            send_image_message(event.reply_token, 'https://i.imgur.com/T2bLdbN.jpg')
+            if machine.state != 'start' and event.message.text.lower() == 'restart':
+                send_text_message(event.reply_token, "restart state")
 
     return "OK"
 
