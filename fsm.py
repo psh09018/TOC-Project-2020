@@ -44,8 +44,6 @@ class TocMachine(GraphMachine):
 
         reply_token = event.reply_token
         send_text_message(reply_token, "Trigger state3")
-        send_image_url("Ubb8eb6259d5cbdfc61090597a9404a9e", "https://i.imgur.com/eTldj2E.png?1")
-        send_text_message(reply_token, "==========")
         self.go_back()
 
     def on_exit_state3(self):

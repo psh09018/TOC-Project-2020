@@ -14,12 +14,7 @@ def send_text_message(reply_token, text):
     return "OK"
 
 def send_image_url(user_id, img_url):
-    line_bot_api = LineBotApi(channel_access_token)
-    try:
-        # for demo, hard coded image url, line api only support image over https
-        line_bot_api.reply_message(user_id, ImageSendMessage(original_content_url=img_url, preview_image_url=img_url))
-    except LineBotApiError as e:
-        line_bot_api.reply_message(reply_token, TextSendMessage(text=e))
+    pass
 """
 def send_button_message(id, text, buttons):
     pass
