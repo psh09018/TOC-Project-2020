@@ -17,7 +17,7 @@ def send_text_message(reply_token, text):
 def send_image_url(reply_token, img_url):
     try:
         # for demo, hard coded image url, line api only support image over https
-        line_bot_api.reply_message(reply_token, ImageSendMessage(original_content_url=img_url, preview_image_url=image_url))
+        line_bot_api.reply_message(reply_token, ImageSendMessage(original_content_url=img_url, preview_image_url=img_url))
     except LineBotApiError as e:
         line_bot_api.reply_message(reply_token, TextSendMessage(text=e))
 """
