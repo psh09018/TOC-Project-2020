@@ -32,4 +32,4 @@ class LineAPI:
             # for demo, hard coded image url, line api only support image over https
             line_bot_api.reply_message(reply_token, ImageSendMessage(original_content_url=FSM_GRAPH_URL, preview_image_url=FSM_GRAPH_URL))
         except LineBotApiError as e:
-            print(e)
+            print(e)zz
