@@ -43,7 +43,8 @@ class TocMachine(GraphMachine):
         print("I'm entering state3")
 
         reply_token = event.reply_token
-        send_text_message(reply_token, "Trigger state3")
+        #send_text_message(reply_token, "Trigger state3")
+        send_image_message(event.reply_token, 'https://chatbot0918.herokuapp.com/show-fsm')
         self.go_back()
 
     def on_exit_state3(self):
