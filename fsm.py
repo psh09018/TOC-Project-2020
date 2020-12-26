@@ -1,6 +1,6 @@
 from transitions.extensions import GraphMachine
 
-from utils import send_text_message, send_image_url
+from utils import send_text_message, send_image_message
 
 
 class TocMachine(GraphMachine):
@@ -42,7 +42,7 @@ class TocMachine(GraphMachine):
     def on_enter_state3(self, event):
         print("I'm entering state3")
 
-        reply_token = event.reply_token
+        # reply_token = event.reply_token
         #send_text_message(reply_token, "Trigger state3")
         send_image_message(event.reply_token, 'https://chatbot0918.herokuapp.com/show-fsm')
         self.go_back()

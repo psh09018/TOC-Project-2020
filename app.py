@@ -3,7 +3,7 @@ import sys
 
 from flask import Flask, jsonify, request, abort, send_file
 from dotenv import load_dotenv
-from linebot import LineBotApi, WebhookParser, WebhookHandler
+from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 
@@ -11,6 +11,7 @@ from fsm import TocMachine
 from utils import send_text_message
 
 load_dotenv()
+
 
 machine = TocMachine(
     states=["user", "state1", "state2", "state3"],
@@ -40,42 +41,48 @@ machine = TocMachine(
     show_conditions=True,
 )
 
-app = Flask(__name__, static_url_path='')
+app = Flask(__name__, static_url_path="")
 
 
 # get channel_secret and channel_access_token from your environment variable
 channel_secret = os.getenv("LINE_CHANNEL_SECRET", None)
 channel_access_token = os.getenv("LINE_CHANNEL_ACCESS_TOKEN", None)
+if channel_secret is None:
+    print("Specify LINE_CHANNEL_SECRET as environment variable.")
+    sys.exit(1)
+if channel_access_token is None:
+    print("Specify LINE_CHANNEL_ACCESS_TOKEN as environment variable.")
+    sys.exit(1)
 
 line_bot_api = LineBotApi(channel_access_token)
 parser = WebhookParser(channel_secret)
 
 
-# @app.route("/callback", methods=["POST"])
-# def callback():
-#     signature = request.headers["X-Line-Signature"]
-#     # get request body as text
-#     body = request.get_data(as_text=True)
-#     app.logger.info("Request body: " + body)
+@app.route("/callback", methods=["POST"])
+def callback():
+    signature = request.headers["X-Line-Signature"]
+    # get request body as text
+    body = request.get_data(as_text=True)
+    app.logger.info("Request body: " + body)
 
-#     # parse webhook body
-#     try:
-#         events = parser.parse(body, signature)
-#     except InvalidSignatureError:
-#         abort(400)
+    # parse webhook body
+    try:
+        events = parser.parse(body, signature)
+    except InvalidSignatureError:
+        abort(400)
 
-#     # if event is MessageEvent and message is TextMessage, then echo text
-#     for event in events:
-#         if not isinstance(event, MessageEvent):
-#             continue
-#         if not isinstance(event.message, TextMessage):
-#             continue
+    # if event is MessageEvent and message is TextMessage, then echo text
+    for event in events:
+        if not isinstance(event, MessageEvent):
+            continue
+        if not isinstance(event.message, TextMessage):
+            continue
 
-#         line_bot_api.reply_message(
-#             event.reply_token, TextSendMessage(text=event.message.text)
-#         )
+        line_bot_api.reply_message(
+            event.reply_token, TextSendMessage(text=event.message.text)
+        )
 
-#     return "OK"
+    return "OK"
 
 
 @app.route("/webhook", methods=["POST"])
@@ -101,38 +108,12 @@ def webhook_handler():
             continue
         print(f"\nFSM STATE: {machine.state}")
         print(f"REQUEST BODY: \n{body}")
-        # send_text_message(event.reply_token, )
         response = machine.advance(event)
         if response == False:
             send_text_message(event.reply_token, "Not Entering any State")
 
     return "OK"
 
-# @app.route("/callback", methods=['POST'])
-# def callback():
-#     # get X-Line-Signature header value
-#     signature = request.headers['X-Line-Signature']
-
-#     # get request body as text
-#     body = request.get_data(as_text=True)
-
-#     app.logger.info("Request body: " + body)
-
-#     # handle webhook body
-#     try:
-#         handler.handle(body, signature)
-#     except InvalidSignatureError:
-#         abort(400)
-
-#     return 'OK'
-
-# @handler.add(MessageEvent, message=TextMessage)
-# def handle_message(event):
-#     # get user id when reply
-#     user_id = event.source.user_id
-#     img_url = "https://i.imgur.com/eTldj2E.png?1"
-#     print("user_id =", user_id)
-#     line_bot_api.reply_message(user_id, ImageSendMessage(original_content_url=img_url, preview_image_url=img_url)
 
 @app.route("/show-fsm", methods=["GET"])
 def show_fsm():
