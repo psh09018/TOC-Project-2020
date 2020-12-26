@@ -44,7 +44,7 @@ class TocMachine(GraphMachine):
 
         reply_token = event.reply_token
         send_text_message(reply_token, "Trigger state3")
-        send_image_url(reply_token, "/show-fsm")
+        send_image_url(reply_token, "https://chatbot0918.herokuapp.com/show-fsm")
         send_text_message(reply_token, "==========")
         self.go_back()
 
