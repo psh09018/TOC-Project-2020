@@ -108,31 +108,31 @@ line_bot_api = LineBotApi(channel_access_token)
 parser = WebhookParser(channel_secret)
 
 
-@app.route("/callback", methods=["POST"])
-def callback():
-    signature = request.headers["X-Line-Signature"]
-    # get request body as text
-    body = request.get_data(as_text=True)
-    app.logger.info("Request body: " + body)
+# @app.route("/callback", methods=["POST"])
+# def callback():
+#     signature = request.headers["X-Line-Signature"]
+#     # get request body as text
+#     body = request.get_data(as_text=True)
+#     app.logger.info("Request body: " + body)
 
-    # parse webhook body
-    try:
-        events = parser.parse(body, signature)
-    except InvalidSignatureError:
-        abort(400)
+#     # parse webhook body
+#     try:
+#         events = parser.parse(body, signature)
+#     except InvalidSignatureError:
+#         abort(400)
 
-    # if event is MessageEvent and message is TextMessage, then echo text
-    for event in events:
-        if not isinstance(event, MessageEvent):
-            continue
-        if not isinstance(event.message, TextMessage):
-            continue
+#     # if event is MessageEvent and message is TextMessage, then echo text
+#     for event in events:
+#         if not isinstance(event, MessageEvent):
+#             continue
+#         if not isinstance(event.message, TextMessage):
+#             continue
 
-        line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text=event.message.text)
-        )
+#         line_bot_api.reply_message(
+#             event.reply_token, TextSendMessage(text=event.message.text)
+#         )
 
-    return "OK"
+#     return "OK"
 
 
 @app.route("/webhook", methods=["POST"])
@@ -172,7 +172,6 @@ def webhook_handler():
                 machine.go_back()
             elif machine.state == 'schedule':
                 send_text_message(event.reply_token, "該天沒有賽程或是輸入錯誤，請重新輸入")    
-            elif machine.state == 'team_info':
 
 
     return "OK"
