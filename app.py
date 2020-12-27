@@ -1,6 +1,5 @@
 import os
 import sys
-import numpy as np
 
 from flask import Flask, jsonify, request, abort, send_file
 from dotenv import load_dotenv
