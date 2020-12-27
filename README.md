@@ -45,6 +45,10 @@
 ## FSM
 ![](https://i.imgur.com/ExlNlEj.png)
 
+## 加入好友，立即使用！
+![](https://i.imgur.com/maOuXo7.png)
+
+
 
 
 		
