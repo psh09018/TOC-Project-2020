@@ -81,7 +81,7 @@ machine = TocMachine(
         # { "trigger": "advance", "source": "team_info", "dest": "P", "conditions": "is_going_to_P",},
 
         #back_forward
-        { "trigger": "go_back", "source": ["schedule", "team_info", "detail", "fsm", "meme"], "dest": "start"},
+        { "trigger": "go_back", "source": ["schedule", "team_info", "team_inquire", "team_choose", "detail", "fsm", "meme"], "dest": "start"},
         { "trigger": "go_team_inquire", "source": ["team_choose"], "dest": "team_inquire"},
         { "trigger": "go_schedule", "source": ["date_1107", "date_1108", "date_1114", "date_1115"], "dest": "schedule"},
         # { "trigger": "go_team_info", "source": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P"], "dest": "team_info"},
