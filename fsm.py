@@ -22,15 +22,6 @@ class TocMachine(GraphMachine):
     def on_enter_team_info(self, event):
         reply_token = event.reply_token
         send_mix_message(reply_token, "請輸入隊伍代號查詢賽程\nex. B", 'https://i.imgur.com/T2bLdbN.jpg')
-        # send_image_message(reply_token, 'https://i.imgur.com/T2bLdbN.jpg')
-        # self.go_back()
-
-    #team_info
-    def is_going_to_team_inquire(self, event):
-        return True
-    def on_enter_team_inquire(self, event):
-        reply_token = event.reply_token
-        send_text_message(reply_token, "請輸入隊伍代號查詢賽程\nex. B")
         # self.go_back()
 
     #team_choose
@@ -53,7 +44,7 @@ class TocMachine(GraphMachine):
 
         reply_token = event.reply_token
         send_text_message(reply_token, information)
-        self.go_team_inquire()
+        self.go_team_info()
 
     #detail
     def is_going_to_detail(self, event):

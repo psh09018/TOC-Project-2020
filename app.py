@@ -15,7 +15,7 @@ load_dotenv()
 
 
 machine = TocMachine(
-    states=["start", "schedule", "team_info", "team_inquire", "team_choose", "detail", "fsm", "meme", 
+    states=["start", "schedule", "team_info", "team_choose", "detail", "fsm", "meme", 
             "date_1107", "date_1108", "date_1114", "date_1115", "team_choose"],
 
     transitions=[
@@ -58,8 +58,7 @@ machine = TocMachine(
         { "trigger": "advance", "source": "schedule", "dest": "date_1115", "conditions": "is_going_to_date_1115",},
 
         #info
-        { "trigger": "advance", "source": "team_info", "dest": "team_inquire", "conditions": "is_going_to_team_inquire",},
-        { "trigger": "advance", "source": "team_inquire", "dest": "team_choose", "conditions": "is_going_to_team_choose",},
+        { "trigger": "advance", "source": "team_info", "dest": "team_choose", "conditions": "is_going_to_team_choose",},
         #####
         
         # #team_info
@@ -81,8 +80,8 @@ machine = TocMachine(
         # { "trigger": "advance", "source": "team_info", "dest": "P", "conditions": "is_going_to_P",},
 
         #back_forward
-        { "trigger": "go_back", "source": ["schedule", "team_info", "team_inquire", "team_choose", "detail", "fsm", "meme"], "dest": "start"},
-        { "trigger": "go_team_inquire", "source": ["team_choose"], "dest": "team_inquire"},
+        { "trigger": "go_back", "source": ["schedule", "team_info", "team_choose", "detail", "fsm", "meme"], "dest": "start"},
+        { "trigger": "go_team_info", "source": ["team_choose"], "dest": "team_info"},
         { "trigger": "go_schedule", "source": ["date_1107", "date_1108", "date_1114", "date_1115"], "dest": "schedule"},
         # { "trigger": "go_team_info", "source": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P"], "dest": "team_info"},
     ],
@@ -172,6 +171,8 @@ def webhook_handler():
                 machine.go_back()
             elif machine.state == 'schedule':
                 send_text_message(event.reply_token, "該天沒有賽程或是輸入錯誤，請重新輸入")    
+            elif machine.state == 'team_info':
+                send_text_message(event.reply_token, "沒有該參賽隊伍代號或是輸入錯誤，請重新輸入")    
 
 
     return "OK"
