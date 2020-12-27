@@ -28,20 +28,20 @@ class TocMachine(GraphMachine):
         self.tmp = text 
         return text in ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P"]
     def on_enter_team_choose(self, event):
-        information = 'fff'
-        # sch7 = ['8:00 A-B / E 光低四','8:00 K-P / O 光低五', '8:00 L-M / I 光高東', 
-        #         '9:00 C-D / B 光低四','9:00 N-O / K 光低五', '9:00 G-H / F 光高東', 
-        #         '10:00 A-E / D 光低四','10:00 L-P / M 光低五', '10:00 I-J / H 光高東', 
-        #         '14:00 K-O / L 光低四','14:00 M-P / N 光低五', '14:00 F-G / J 光高東', 
-        #         '15:00 B-C / A 光低四','15:00 L-N / P 光低五', '15:00 H-I / G 光高東', 
-        #         '16:00 D-E / C 光低四','16:00 M-O / L 光低五', '16:00 F-J / N 光高東']
-        # for word in sch7:
-        #     for symbol in word:
-        #         if self.tmp == symbol:
-        #             information = information + word + '\n'
+        information = '11/07 ' + self.tmp + " 比賽時程如下: \n"
+        sch7 = ['08:00 A-B / E 光低四','08:00 K-P / O 光低五', '08:00 L-M / I 光高東', 
+                '09:00 C-D / B 光低四','09:00 N-O / K 光低五', '09:00 G-H / F 光高東', 
+                '10:00 A-E / D 光低四','10:00 L-P / M 光低五', '10:00 I-J / H 光高東', 
+                '14:00 K-O / L 光低四','14:00 M-P / N 光低五', '14:00 F-G / J 光高東', 
+                '15:00 B-C / A 光低四','15:00 L-N / P 光低五', '15:00 H-I / G 光高東', 
+                '16:00 D-E / C 光低四','16:00 M-O / L 光低五', '16:00 F-J / N 光高東']
+        for word in sch7:
+            for symbol in word:
+                if self.tmp == symbol:
+                    information = information + word + '\n'
 
         reply_token = event.reply_token
-        send_text_message(reply_token, information)
+        send_text_message(reply_token, information[:-1])
         self.go_team_info()
 
     #detail
