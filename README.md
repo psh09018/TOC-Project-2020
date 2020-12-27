@@ -29,6 +29,22 @@
 	- `fsm`:
 		- 獲得該聊天機器人之fsm圖
 
-##使用示範
+## 使用示範
+加入好友
+![](https://i.imgur.com/FUpeMPz.png)
+輸入`賽程`，並輸入欲查詢日期，以及`restart`回到起始狀態
+![](https://i.imgur.com/jI3Q3OU.jpg)
+![](https://i.imgur.com/WMgafiW.png)
+輸入`隊伍資訊`，並輸入隊伍代號，獲得比賽當日賽程，最後以`restart`回到起始狀態
+![](https://i.imgur.com/v2Ji0VC.jpg)
+輸入`活動詳情`，獲得比賽資訊；以及`fsm`獲得聊天機器人之fsm
+![](https://i.imgur.com/S07TeO0.png)
+輸入`meme`，可以隨機獲得一張圖
+![](https://i.imgur.com/t6p9Lsj.png)
+
+## FSM
+![](https://i.imgur.com/ExlNlEj.png)
+
+
 
 		
