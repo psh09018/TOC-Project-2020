@@ -138,7 +138,3 @@ class TocMachine(GraphMachine):
         reply_token = event.reply_token
         send_mix_message(reply_token, "決賽賽程尚未開始，複賽結束後將更新", 'https://i.imgur.com/cr9DkYV.png')
         self.go_schedule()
-    
-    
-
-
