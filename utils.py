@@ -22,6 +22,20 @@ def send_image_message(reply_token, url):
     line_bot_api.reply_message(reply_token, message)
 
     return "OK"
+
+def send_mix_message(reply_token, text, url):
+    line_bot_api = LineBotApi(channel_access_token)
+    message = [TextSendMessage(text=text), ImageSendMessage(original_content_url = url, preview_image_url = url)]
+    # [{
+                
+    # },
+    # {
+    #     type: 'ima'
+    # }]
+    line_bot_api.reply_message(reply_token, message)
+
+    return "OK"
+
 """
 def send_button_message(id, text, buttons):
     pass
