@@ -1,6 +1,8 @@
 from transitions.extensions import GraphMachine
 from utils import send_text_message, send_image_message, send_mix_message
 
+import random
+
 class TocMachine(GraphMachine):
     def __init__(self, **machine_configs):
         self.machine = GraphMachine(model=self, **machine_configs)
@@ -73,7 +75,7 @@ class TocMachine(GraphMachine):
         return text.lower() == "fsm"
     def on_enter_fsm(self, event):
         reply_token = event.reply_token
-        send_text_message(reply_token, "fsm")
+        send_image_message(reply_token,'https://i.imgur.com/ExlNlEj.png')
         self.go_back()
 
     #meme
@@ -81,8 +83,27 @@ class TocMachine(GraphMachine):
         text = event.message.text
         return text.lower() == "meme"
     def on_enter_meme(self, event):
+        pick = random.randint(0,9)
+        if pick==0:
+            url = 'https://i.imgur.com/8WTPDr3.png'
+        elif pick==1:
+            url = 'https://i.imgur.com/cVUaO2w.jpg'
+        elif pick==2:
+            url = 'https://i.imgur.com/7XNk23T.png'
+        elif pick==3:
+            url = 'https://i.imgur.com/sON6KEx.png'
+        elif pick==4:
+            url = 'https://i.imgur.com/7Yom7qI.png'
+        elif pick==5:
+            url = 'https://i.imgur.com/hTOOBVD.png'
+        elif pick==6:
+            url = 'https://i.imgur.com/LsCkGNq.png'
+        elif pick==7:
+            url = 'https://i.imgur.com/WPukVvs.png'
+        elif pick==8:
+            url = 'https://i.imgur.com/PBcQAkD.png'
         reply_token = event.reply_token
-        send_text_message(reply_token, "meme")
+        send_image_message(reply_token, url)
         self.go_back()
 
     #date
@@ -107,7 +128,7 @@ class TocMachine(GraphMachine):
         return text == "11/14"
     def on_enter_date_1114(self, event):
         reply_token = event.reply_token
-        send_text_message(reply_token, "11/14")
+        send_mix_message(reply_token, "複賽賽程尚未開始，初賽結束後將更新", 'https://i.imgur.com/E4wPZvc.png')
         self.go_schedule()
     
     def is_going_to_date_1115(self, event):
@@ -115,7 +136,7 @@ class TocMachine(GraphMachine):
         return text == "11/15"
     def on_enter_date_1115(self, event):
         reply_token = event.reply_token
-        send_text_message(reply_token, "11/15")
+        send_mix_message(reply_token, "決賽賽程尚未開始，複賽結束後將更新", 'https://i.imgur.com/cr9DkYV.png')
         self.go_schedule()
     
     
