@@ -1,4 +1,4 @@
-# import numpy as np
+import numpy as np
 from transitions.extensions import GraphMachine
 
 from utils import send_text_message, send_image_message
@@ -36,8 +36,8 @@ class TocMachine(GraphMachine):
     #team_choose
     def is_going_to_team_choose(self, event):
         text = event.message.text
-        self.tmp = text
-        return text == ("A" or "B" or "C" or "D" or "E" or "F" or "G" or "H" or "I" or "J" or "K" or "L" or "M" or "N" or "O" or "P")
+        self.tmp = text 
+        return text in ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P"]
     def on_enter_team_choose(self, event):
         information = 'choose state'
         # sch7 = np.array(['8:00 A-B / E 光低四','8:00 K-P / O 光低五', '8:00 L-M / I 光高東', 
