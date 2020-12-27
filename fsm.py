@@ -1,3 +1,4 @@
+import numpy as np
 from transitions.extensions import GraphMachine
 
 from utils import send_text_message, send_image_message
@@ -38,7 +39,7 @@ class TocMachine(GraphMachine):
         self.tmp = text
         return text == ("A" or "B" or "C" or "D" or "E" or "F" or "G" or "H" or "I" or "J" or "K" or "L" or "M" or "N" or "O" or "P")
     def on_enter_team_choose(self, event):
-        infomation = None
+        information = None
         sch7 = np.array(['8:00 A-B / E 光低四','8:00 K-P / O 光低五', '8:00 L-M / I 光高東', 
                         '9:00 C-D / B 光低四','9:00 N-O / K 光低五', '9:00 G-H / F 光高東', 
                         '10:00 A-E / D 光低四','10:00 L-P / M 光低五', '10:00 I-J / H 光高東', 
