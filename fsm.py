@@ -83,7 +83,7 @@ class TocMachine(GraphMachine):
         text = event.message.text
         return text.lower() == "meme"
     def on_enter_meme(self, event):
-        pick = random.randint(0,9)
+        pick = random.randint(0,8)
         if pick==0:
             url = 'https://i.imgur.com/8WTPDr3.png'
         elif pick==1:
