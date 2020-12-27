@@ -1,6 +1,6 @@
 import os
 import sys
-# import numpy as np
+import numpy as np
 
 from flask import Flask, jsonify, request, abort, send_file
 from dotenv import load_dotenv
@@ -172,7 +172,9 @@ def webhook_handler():
             elif machine.state == 'schedule':
                 send_text_message(event.reply_token, "該天沒有賽程或是輸入錯誤，請重新輸入")    
             elif machine.state == 'team_info':
-                send_text_message(event.reply_token, "沒有該參賽隊伍代號或是輸入錯誤，請重新輸入")    
+                send_text_message(event.reply_token, "沒有該參賽隊伍代號或是輸入錯誤，請重新輸入") 
+            else
+                send_text_message(event.reply_token, "輸入指令錯誤！\n請輸入『賽程』、『隊伍資訊』、『活動詳情』獲得比賽相關資訊。")   
 
 
     return "OK"
