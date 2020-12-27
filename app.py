@@ -1,5 +1,6 @@
 import os
 import sys
+import numpy as np
 
 from flask import Flask, jsonify, request, abort, send_file
 from dotenv import load_dotenv
@@ -14,8 +15,8 @@ load_dotenv()
 
 
 machine = TocMachine(
-    states=["start", "schedule", "team_info", "detail", "fsm", "meme", 
-            "date_1107", "date_1108", "date_1114", "date_1115",],
+    states=["start", "schedule", "team_info", "team_inquire", "team_choose", "detail", "fsm", "meme", 
+            "date_1107", "date_1108", "date_1114", "date_1115", "team_choose"],
 
     transitions=[
         # start-schedule
@@ -56,6 +57,9 @@ machine = TocMachine(
         { "trigger": "advance", "source": "schedule", "dest": "date_1114", "conditions": "is_going_to_date_1114",},
         { "trigger": "advance", "source": "schedule", "dest": "date_1115", "conditions": "is_going_to_date_1115",},
 
+        #info
+        { "trigger": "advance", "source": "team_info", "dest": "team_inquire", "conditions": "is_going_to_team_inquire",},
+        { "trigger": "advance", "source": "team_inquire", "dest": "team_choose", "conditions": "is_going_to_team_choose",},
         #####
         
         # #team_info
@@ -78,6 +82,7 @@ machine = TocMachine(
 
         #back_forward
         { "trigger": "go_back", "source": ["schedule", "team_info", "detail", "fsm", "meme"], "dest": "start"},
+        { "trigger": "go_team_inquire", "source": ["team_choose"], "dest": "team_inquire"},
         { "trigger": "go_schedule", "source": ["date_1107", "date_1108", "date_1114", "date_1115"], "dest": "schedule"},
         # { "trigger": "go_team_info", "source": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P"], "dest": "team_info"},
     ],
@@ -153,6 +158,7 @@ def webhook_handler():
             continue
         print(f"\nFSM STATE: {machine.state}")
         print(f"REQUEST BODY: \n{body}")
+
         response = machine.advance(event)
         if response == False:
             if machine.state != 'start' and event.message.text.lower() == 'restart':
@@ -166,6 +172,8 @@ def webhook_handler():
                 machine.go_back()
             elif machine.state == 'schedule':
                 send_text_message(event.reply_token, "該天沒有賽程或是輸入錯誤，請重新輸入")    
+            elif machine.state == 'team_info':
+
 
     return "OK"
 

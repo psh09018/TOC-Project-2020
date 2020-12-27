@@ -2,11 +2,10 @@ from transitions.extensions import GraphMachine
 
 from utils import send_text_message, send_image_message
 
-
 class TocMachine(GraphMachine):
     def __init__(self, **machine_configs):
         self.machine = GraphMachine(model=self, **machine_configs)
-
+        self.tmp = None
     
     #schedule
     def is_going_to_schedule(self, event):
@@ -23,7 +22,37 @@ class TocMachine(GraphMachine):
     def on_enter_team_info(self, event):
         reply_token = event.reply_token
         send_image_message(reply_token, 'https://i.imgur.com/T2bLdbN.jpg')
-        self.go_back()
+        # self.go_back()
+
+    #team_info
+    def is_going_to_team_inquire(self, event):
+        return True
+    def on_enter_team_inquire(self, event):
+        reply_token = event.reply_token
+        send_text_message(reply_token, "請輸入隊伍代號查詢賽程\nex. B")
+        # self.go_back()
+
+    #team_choose
+    def is_going_to_team_choose(self, event):
+        text = event.message.text
+        self.tmp = text
+        return text == ("A" or "B" or "C" or "D" or "E" or "F" or "G" or "H" or "I" or "J" or "K" or "L" or "M" or "N" or "O" or "P")
+    def on_enter_team_choose(self, event):
+        infomation = None
+        sch7 = np.array(['8:00 A-B / E 光低四','8:00 K-P / O 光低五', '8:00 L-M / I 光高東', 
+                        '9:00 C-D / B 光低四','9:00 N-O / K 光低五', '9:00 G-H / F 光高東', 
+                        '10:00 A-E / D 光低四','10:00 L-P / M 光低五', '10:00 I-J / H 光高東', 
+                        '14:00 K-O / L 光低四','14:00 M-P / N 光低五', '14:00 F-G / J 光高東', 
+                        '15:00 B-C / A 光低四','15:00 L-N / P 光低五', '15:00 H-I / G 光高東', 
+                        '16:00 D-E / C 光低四','16:00 M-O / L 光低五', '16:00 F-J / N 光高東'])
+        for word in sch7:
+            for symbol in word:
+                if self.tmp == symbol:
+                    information = information + word + '\n'
+
+        reply_token = event.reply_token
+        send_text_message(reply_token, information)
+        self.go_team_inquire()
 
     #detail
     def is_going_to_detail(self, event):
@@ -38,8 +67,8 @@ class TocMachine(GraphMachine):
                       ---活動時間---\n\
                       中華民國109年\n\
                       預賽：11/07,08\n\
-                      複賽：11/15\n\
-                      決賽：11/16\n\
+                      複賽：11/14\n\
+                      決賽：11/15\n\
                       雨備：11/22,23\n\
                       ---活動地點---\n\
                       光復校區排球場\n\
@@ -65,18 +94,6 @@ class TocMachine(GraphMachine):
         reply_token = event.reply_token
         send_text_message(reply_token, "meme")
         self.go_back()
-
-    # #go back to start
-    # def is_going_to_start(self, event):
-    #     text = event.message.text
-    #     if text.lower() == "restart":
-    #         self.go_back()
-    #     # return text.lower() == "restart"
-
-    # def on_enter_start(self, event):
-    #     reply_token = event.reply_token
-    #     send_text_message(reply_token, "go back to start condition")
-    #     self.go_back()
 
     #date
     def is_going_to_date_1107(self, event):
