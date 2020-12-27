@@ -20,7 +20,7 @@ class TocMachine(GraphMachine):
         return text == "隊伍資訊"
     def on_enter_team_info(self, event):
         reply_token = event.reply_token
-        send_mix_message(reply_token, "請輸入隊伍代號查詢賽程\nex. B", 'https://i.imgur.com/T2bLdbN.jpg')
+        send_mix_message(reply_token, "請輸入隊伍代號查詢賽程\nex. B", 'https://i.imgur.com/94QHPjs.png')
 
     #team_choose
     def is_going_to_team_choose(self, event):
@@ -91,7 +91,7 @@ class TocMachine(GraphMachine):
         return text == "11/07"
     def on_enter_date_1107(self, event):
         reply_token = event.reply_token
-        send_text_message(reply_token, "11/07")
+        send_image_message(reply_token,'https://i.imgur.com/nxZWO5f.png')
         self.go_schedule()
     
     def is_going_to_date_1108(self, event):
@@ -99,7 +99,7 @@ class TocMachine(GraphMachine):
         return text == "11/08"
     def on_enter_date_1108(self, event):
         reply_token = event.reply_token
-        send_text_message(reply_token, "11/08")
+        send_image_message(reply_token,'https://i.imgur.com/ymN9iRr.png')
         self.go_schedule()
     
     def is_going_to_date_1114(self, event):
